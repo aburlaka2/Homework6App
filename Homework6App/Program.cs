@@ -1,26 +1,35 @@
 ﻿using System;
 
-namespace Lesson6
+namespace Homework6App
 {
     class Program
     {
-        const char Player = '☻';
+        static Player Player = new Player();
+        static Enemy Enemy1 = new Enemy();
+        static Enemy Enemy2 = new Enemy();
+        static Enemy Enemy3 = new Enemy();
         static Cell[,] Map = new Cell[15, 15];
-        static int xPos = 0;
-        static int yPos = 0;
-        static bool isAlive = true;
         static int turnCount = 0;
 
         static void Main(string[] args)
         {
             GenerateMap();
             // set player to init position
-            Map[1, 1].SetPlayer(Player);
-            xPos = 1;
-            yPos = 1;
+            Map[1, 1].SetPlayer(Player.Char);
+            Map[10, 10].SetEnemy(Enemy1.Char);
+            Map[3, 10].SetEnemy(Enemy1.Char);
+            Map[10, 3].SetEnemy(Enemy1.Char);
+            Player.xPos = 1;
+            Player.yPos = 1;
+            Enemy1.xPos = 10;
+            Enemy1.yPos = 3;
+            Enemy1.xPos = 10;
+            Enemy1.yPos = 10;
+            Enemy1.xPos = 10;
+            Enemy1.yPos = 3;
             RenderMap();
 
-            while (isAlive)
+            while (Player.isAlive)
             {
                 turnCount++;
                 bool isInputSuccess;
@@ -94,6 +103,12 @@ namespace Lesson6
                                 break;
                             }
                     }
+                    Enemy1.EnemyMove(Map, Enemy1.xPos, Enemy1.yPos);
+                    RenderMap();
+                    Enemy2.EnemyMove(Map, Enemy2.xPos, Enemy2.yPos);
+                    RenderMap();
+                    Enemy3.EnemyMove(Map, Enemy3.xPos, Enemy3.yPos);
+                    RenderMap();
                 }
                 while (!isInputSuccess);
 
@@ -127,6 +142,11 @@ namespace Lesson6
                         ToConsole(Map[i, k].ToString(), ConsoleColor.Yellow);
                         Console.Write("|");
                     }
+                    else if (Map[i, k].IsEnemyKeeper)
+                    {
+                        ToConsole(Map[i, k].ToString(), ConsoleColor.Red);
+                        Console.Write("|");
+                    }
                     else
                     {
                         Console.Write($"{Map[i, k]}|");
@@ -147,11 +167,11 @@ namespace Lesson6
         {
             bool isInBounds = true;
 
-            int newPosX = xPos + xDelta;
-            int newPosY = yPos + yDelta;
+            int newPosX = Player.xPos + xDelta;
+            int newPosY = Player.yPos + yDelta;
 
-            if (xPos + xDelta < 0 || xPos + xDelta >= Map.GetLength(0) ||
-                yPos + yDelta < 0 || yPos + yDelta >= Map.GetLength(1))
+            if (Player.xPos + xDelta < 0 || Player.xPos + xDelta >= Map.GetLength(0) ||
+                Player.yPos + yDelta < 0 || Player.yPos + yDelta >= Map.GetLength(1))
             {
                 isInBounds = false;
             }
@@ -165,77 +185,16 @@ namespace Lesson6
         /// <param name="nDelta"></param>
         static void SetPlayerToPosition(int xDelta, int yDelta)
         {
-            int newPosX = xPos + xDelta;
-            int newPosY = yPos + yDelta;
+            int newPosX = Player.xPos + xDelta;
+            int newPosY = Player.yPos + yDelta;
 
-            Map[xPos, yPos].Reset();
-            Map[newPosX, newPosY].SetPlayer(Player);
+            Map[Player.xPos, Player.yPos].Reset();
+            Map[newPosX, newPosY].SetPlayer(Player.Char);
 
-            xPos = newPosX;
-            yPos = newPosY;
+            Player.xPos = newPosX;
+            Player.yPos = newPosY;
         }
 
-
-        static void Task()
-        {
-            int size = 0;
-            bool success = false;
-            do
-            {
-                Console.Write("Enter size: ");
-                string input = Console.ReadLine();
-                if (!double.TryParse(input, out double number))
-                {
-                    Console.WriteLine("Not a number!");
-                    continue;
-                }
-
-                if (number <= 0)
-                {
-                    Console.WriteLine("Size must be more than 0");
-                    continue;
-                }
-
-                if (number - (int)number > 0)
-                {
-                    Console.WriteLine("Only integer!");
-                    continue;
-                }
-
-                success = true;
-                size = (int)number;
-                Console.WriteLine();
-            }
-            while (!success);
-
-            Console.WriteLine("Task 1\n");
-            int[,] vs = new int[size, size];
-
-            for (int i = 0; i < size; i++)
-            {
-                for (int k = 0; k < size; k++)
-                {
-                    vs[i, k] = i >= k ? i + 1 : 0;
-                    Console.Write($"{vs[i, k]}\t");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-
-            Console.WriteLine("Task 2\n");
-            int[,] vs1 = new int[size, size];
-
-            for (int i = 0; i < size; i++)
-            {
-                for (int k = 0; k < size; k++)
-                {
-                    vs[i, k] = i >= k ? (i + 1) * (k + 1) : 0;
-                    Console.Write($"{vs[i, k]}\t");
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-        }
 
         public static void ToConsole(string str, ConsoleColor color = ConsoleColor.White)
         {
@@ -244,30 +203,10 @@ namespace Lesson6
             Console.ResetColor();
         }
 
-        static void Recursion(params int[] array)
-        {
-            if (array.Length > 1)
-            {
-                int[] newLine = new int[array.Length - 1];
-                for (int i = 0; i < newLine.Length; i++)
-                {
-                    newLine[i] = array[i] + array[i + 1];
-                }
-                Recursion(newLine);
-                foreach (int item in array)
-                {
-                    Console.Write($"{item}\t");
-                }
-                Console.WriteLine();
-            }
-            else if (array.Length == 1)
-            {
-                Console.WriteLine($"{array[0]}");
-            }
-            else
-            {
-                Console.WriteLine("Empty array");
-            }
-        }
+        
+
+
+
+
     }
 }
