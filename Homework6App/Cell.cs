@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Lesson6
+namespace Homework6App
 {
     public class Cell
     {
@@ -15,6 +15,7 @@ namespace Lesson6
         }
 
         public bool IsPlayerKeeper { get; set; }
+        public bool IsEnemyKeeper { get; set; }
         public bool CanMove { get; }
 
         public int InMapPositionX { get; }
@@ -26,7 +27,7 @@ namespace Lesson6
             InMapPositionY = y;
 
             char element = ' ';
-            if (x == 1 && y == 1)
+            if (x == 1 && y == 1||x==10&&y==10)
             {
                 CanMove = true;
             }
@@ -53,10 +54,23 @@ namespace Lesson6
                 throw new Exception("CanMove = false");
             }
         }
+        public void SetEnemy(char enemy)
+        {
+            if (CanMove)
+            {
+                IsEnemyKeeper = true;
+                CellValue = enemy;
+            }
+            else
+            {
+                //throw new Exception("CanMove = false");
+            }
+        }
 
         public void Reset()
         {
             IsPlayerKeeper = false;
+            IsEnemyKeeper = false;
             CellValue = initValue;
         }
 
