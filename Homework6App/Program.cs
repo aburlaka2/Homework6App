@@ -5,7 +5,7 @@ namespace Homework6App
     class Program
     {
         static Player Player = new Player();
-        static Enemy Enemy1 = new Enemy();
+        static Enemy Enemy = new Enemy();
         static Enemy Enemy2 = new Enemy();
         static Enemy Enemy3 = new Enemy();
         static Cell[,] Map = new Cell[15, 15];
@@ -16,22 +16,25 @@ namespace Homework6App
             GenerateMap();
             // set player to init position
             Map[1, 1].SetPlayer(Player.Char);
-            Map[10, 10].SetEnemy(Enemy1.Char);
-            Map[3, 10].SetEnemy(Enemy1.Char);
-            Map[10, 3].SetEnemy(Enemy1.Char);
+            Map[10, 10].SetEnemy(Enemy.Char);
+            Map[3, 10].SetEnemy(Enemy.Char);
+            Map[10, 3].SetEnemy(Enemy.Char);
             Player.xPos = 1;
             Player.yPos = 1;
-            Enemy1.xPos = 10;
-            Enemy1.yPos = 3;
-            Enemy1.xPos = 10;
-            Enemy1.yPos = 10;
-            Enemy1.xPos = 10;
-            Enemy1.yPos = 3;
+            RenderMap();
+            Enemy.xPos = 3;
+            Enemy.yPos = 10;
+            RenderMap();
+            Enemy2.xPos = 10;
+            Enemy2.yPos = 10;
+            RenderMap();
+            Enemy3.xPos = 10;
+            Enemy3.yPos = 3;
             RenderMap();
 
             while (Player.isAlive)
             {
-                turnCount++;
+
                 bool isInputSuccess;
 
                 do
@@ -103,12 +106,9 @@ namespace Homework6App
                                 break;
                             }
                     }
-                    Enemy1.EnemyMove(Map, Enemy1.xPos, Enemy1.yPos);
-                    RenderMap();
+                    Enemy.EnemyMove(Map, Enemy.xPos, Enemy.yPos);
                     Enemy2.EnemyMove(Map, Enemy2.xPos, Enemy2.yPos);
-                    RenderMap();
                     Enemy3.EnemyMove(Map, Enemy3.xPos, Enemy3.yPos);
-                    RenderMap();
                 }
                 while (!isInputSuccess);
 
