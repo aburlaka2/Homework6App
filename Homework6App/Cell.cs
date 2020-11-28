@@ -33,8 +33,8 @@ namespace Homework6App
             }
             else
             {
-                int randValue = new Random().Next(0, 3);
-                element = randValue == 1 ? '#' : randValue == 2 ? '@' : ' ';
+                int randValue = new Random().Next(0, 4);
+                element = randValue == 1 ? '▲' : randValue == 2 ? '♠' : randValue == 3 ? '♣':' ' ;
                 CanMove = randValue != 1;
             }
 
