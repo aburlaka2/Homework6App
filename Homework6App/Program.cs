@@ -137,7 +137,22 @@ namespace Homework6App
                 Console.Write("|");
                 for (int k = 0; k < Map.GetLength(1); k++)
                 {
-                    if (Map[i, k].IsPlayerKeeper)
+                    if (Map[i, k].CellValue == '♠')
+                    {
+                        ToConsole(Map[i, k].ToString(), ConsoleColor.DarkGreen);
+                        Console.Write("|");
+                    }
+                    else if (Map[i, k].CellValue == '♣')
+                    {
+                        ToConsole(Map[i, k].ToString(), ConsoleColor.Green);
+                        Console.Write("|");
+                    }
+                    else if (Map[i, k].CellValue == '▲')
+                    {
+                        ToConsole(Map[i, k].ToString(), ConsoleColor.DarkRed);
+                        Console.Write("|");
+                    }
+                    else if (Map[i, k].IsPlayerKeeper)
                     {
                         ToConsole(Map[i, k].ToString(), ConsoleColor.Yellow);
                         Console.Write("|");
