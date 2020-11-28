@@ -16,7 +16,7 @@ namespace Homework6App
 
         public Enemy()
         {
-            Char = '☻';
+            Char = '♉';
             xPos = 0;
             yPos = 0;
         }
