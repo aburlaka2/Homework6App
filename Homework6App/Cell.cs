@@ -27,7 +27,7 @@ namespace Homework6App
             InMapPositionY = y;
 
             char element = ' ';
-            if (x == 1 && y == 1||x==10&&y==10)
+            if (x == 1 && y == 1||x==10&&y==10||x==10&&y==3||x==3&&y==10)
             {
                 CanMove = true;
             }
@@ -63,13 +63,18 @@ namespace Homework6App
             }
             else
             {
-                //throw new Exception("CanMove = false");
+                throw new Exception("CanMove = false");
             }
         }
 
         public void Reset()
         {
             IsPlayerKeeper = false;
+
+            CellValue = initValue;
+        }
+        public void ResetEnemy()
+        {
             IsEnemyKeeper = false;
             CellValue = initValue;
         }
